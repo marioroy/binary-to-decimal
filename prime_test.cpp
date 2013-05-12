@@ -10,7 +10,8 @@
         g++ -O3 -DTEST1 prime_test.cpp -o prime1_test
         g++ -O3 -DTEST2 prime_test.cpp -o prime2_test
         g++ -O3 -DTEST3 prime_test.cpp -l mpir -o prime3_test
-
+        g++ -O3 -DTEST4 prime_test.cpp -l mpir -o prime4_test
+ 
     Compiled on Windows with VC++ 2010
         cl /nologo /EHs /O2 /DTEST0 prime_test.cpp /Feprime0_test.exe
         cl /nologo /EHs /O2 /DTEST1 prime_test.cpp /Feprime1_test.exe
@@ -20,7 +21,12 @@
             /I C:\mpir-2.6.0\lib\Win32\Release
             prime_test.cpp /Feprime3_test.exe
             /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
-*/
+
+        cl /nologo /EHs /O2 /DTEST4
+            /I C:\mpir-2.6.0\lib\Win32\Release
+            prime_test.cpp /Feprime4_test.exe
+            /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
+ */
 
 #define PRIME_UNDER_TEST
 
