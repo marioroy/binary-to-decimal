@@ -18,6 +18,7 @@
 #include <vector>
 #include <stdexcept>
 #include <stdint.h>
+#include <string.h>
 #include <mpir.h>
 
 
