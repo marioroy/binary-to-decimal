@@ -11,6 +11,22 @@
         g++ -O3 -DTEST2 prime_test.cpp -o prime2_test
         g++ -O3 -DTEST3 prime_test.cpp -l mpir -o prime3_test
         g++ -O3 -DTEST4 prime_test.cpp -l mpir -o prime4_test
+
+        # MPIR: using OpenMP for parallel recursion in mpn_get_str
+        g++ -O3 -DTEST5 -fopenmp prime_test.cpp -I/usr/local/include
+            -L/usr/local/lib -l mpir -o prime5_test -Wno-attributes
+
+        # MPIR: using pthreads for parallel recursion in mpn_get_str
+        g++ -O3 -DTEST5 -pthread prime_test.cpp -I/usr/local/include
+            -L/usr/local/lib -l mpir -o prime5_test -Wno-attributes
+ 
+        # GMP: using OpenMP for parallel recursion in mpn_get_str
+        g++ -O3 -DTEST6 -fopenmp prime_test.cpp -I/usr/local/include
+            -L/usr/local/lib -l gmp -o prime6_test -Wno-attributes
+
+        # GMP: using pthreads for parallel recursion in mpn_get_str
+        g++ -O3 -DTEST6 -pthread prime_test.cpp -I/usr/local/include
+            -L/usr/local/lib -l gmp -o prime6_test -Wno-attributes
  
     Compiled on Windows with VC++ 2010
         cl /nologo /EHs /O2 /DTEST0 prime_test.cpp /Feprime0_test.exe
@@ -26,6 +42,11 @@
             /I C:\mpir-2.6.0\lib\Win32\Release
             prime_test.cpp /Feprime4_test.exe
             /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
+
+        cl /nologo /EHs /O2 /DTEST5
+            /I C:\mpir-2.6.0\lib\Win32\Release
+            prime_test.cpp /Feprime5_test.exe
+            /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
  */
 
 #define PRIME_UNDER_TEST
@@ -40,6 +61,10 @@
 #include "prime3.cpp"
 #elif defined(TEST4)
 #include "prime4.cpp"
+#elif defined(TEST5)
+#include "prime5.cpp"
+#elif defined(TEST6)
+#include "prime6.cpp"
 #else
 "to test prime0.cpp define TEST0; to test prime1.cpp define TEST1; ..."
 #endif
@@ -225,7 +250,7 @@ void test_prime_calculation()
     prime_test(   44497,    13395, "854509824", "011228671");
     prime_test(   86243,    25962, "536927995", "433438207");
 
-#if defined(TEST2) || defined(TEST3) || defined(TEST4)
+#if defined(TEST2) || defined(TEST3) || defined(TEST4) || defined(TEST5) || defined(TEST6)
     // these take too long for prime0.cpp and prime1.cpp
     prime_test(  110503,    33265, "521928313", "465515007");
     prime_test(  132049,    39751, "512740276", "730061311");
@@ -234,7 +259,7 @@ void test_prime_calculation()
     prime_test(  859433,   258716, "129498125", "500142591");
 #endif
 
-#if defined(TEST3) || defined(TEST4)
+#if defined(TEST3) || defined(TEST4) || defined(TEST5) || defined(TEST6)
     // these take too long for prime0.cpp, prime1.cpp and prime2.cpp
     // (prime3.cpp and prime4.cpp can do them in 20 minutes or so)
     prime_test( 1257787,   378632, "412245773", "089366527");
@@ -357,7 +382,7 @@ void test_basic_binary_to_decimal_conversion()
 }
 
 
-#if defined(TEST4)
+#if defined(TEST4) || defined(TEST5) || defined(TEST6)
 
 // "normalise" given 'num'; if num is normalised the following will be true
 //   1. num.size() > 0
