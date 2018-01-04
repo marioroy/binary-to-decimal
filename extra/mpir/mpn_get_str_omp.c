@@ -318,7 +318,7 @@ mpn_dc_get_str (unsigned char *str, size_t len,
           if (len != 0)
             len = len - powtab->digits_in_base;
 
-          if (level > 3 || powtab->digits_in_base < 50000UL)
+          if (level > 3 || powtab->digits_in_base < 500000UL)
             {
               str = mpn_dc_get_str (str, len, qp, qn, powtab - 1, tmp + qn, level);
               str = mpn_dc_get_str (str, powtab->digits_in_base, rp, pwn + sn, powtab - 1, tmp, level);

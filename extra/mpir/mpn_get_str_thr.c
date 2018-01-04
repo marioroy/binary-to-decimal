@@ -328,9 +328,9 @@ mpn_dc_get_str (unsigned char *str, size_t len,
             len = len - powtab->digits_in_base;
 
          #if defined(WIN32) && !defined(_OPENMP)
-          if (level > 1 || powtab->digits_in_base < 50000UL)
+          if (level > 1 || powtab->digits_in_base < 500000UL)
          #else
-          if (level > 3 || powtab->digits_in_base < 50000UL)
+          if (level > 3 || powtab->digits_in_base < 500000UL)
          #endif
             {
               str = mpn_dc_get_str (str, len, qp, qn, powtab - 1, tmp + qn, level);
