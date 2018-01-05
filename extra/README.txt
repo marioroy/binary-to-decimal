@@ -5,33 +5,20 @@
 Parallel recursion for mpn_get_str supporting OpenMP and pthreads.
 By Mario Roy, 2018. See https://github.com/marioroy/binary-to-decimal.
 
-Dear GMP/MPIR developers,
-
-I tried the parallel pgmp-chudnovsky.c on the web and wanted mpn_get_str
-to do the conversion faster. For really "big" numbers, it still takes a
-long time before the first divide-and-conquer inside mpn/get_str.c.
-At which point 2 threads run, then 4, and eventually 8 threads max.
-
-What will become of GMP/MPIR when computing devices are later equipped
-with 100 cores and the clock speed decreases due to having many cores?
-Does that mean applications will run slower over time due to using
-one core?
-
-  a wish : gmp-7.x.x   parallel
-           mpir-4.x.x  parallel
+Dear GMP/MPIR developer(s),
 
 A common wish on the web is for mpn_get_str to run faster. Please,
-feel free to disregard my first and humble attempt. Another way is
-deeper inside the library. E.g. having mpn_mul run parallel.
+feel free to disregard my humble attempt. For really "big" numbers,
+it still takes a long time before reaching the initial divide-and-
+conquer inside mpn_dc_get_str. At which point 2 threads run, then 4,
+and not to exceed 8 threads max.
 
-Acknowledgemet:
-  https://github.com/anthay/binary-to-decimal, by Anthony Hay.
+Acknowledgemet
+  https://github.com/anthay/binary-to-decimal, by Anthony Hay
+  prime_test.cpp is useful for validating changes to mpn/get_str.c
+  added prime5.cpp (using MPIR) and prime6.cpp (using GMP)
 
-  Useful is prime_test.cpp for validating changes to mpn/get_str.c.
-  Added prime5.cpp (using MPIR) and prime6.cpp (using GMP).
-
-
-Regards,
+Best,
   Mario Roy
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
