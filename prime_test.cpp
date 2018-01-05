@@ -5,7 +5,7 @@
     This is free and unencumbered public domain software; see http://unlicense.org/
     I believe this code to be correct, but I may be wrong; use at your own risk.
 
-    Compiled on OS X with g++ 4.2
+    Compiled on Linux / OS X with g++ 4.2 or later
         g++ -O3 -DTEST0 prime_test.cpp -o prime0_test
         g++ -O3 -DTEST1 prime_test.cpp -o prime1_test
         g++ -O3 -DTEST2 prime_test.cpp -o prime2_test
@@ -13,6 +13,7 @@
         g++ -O3 -DTEST4 prime_test.cpp -l mpir -o prime4_test
 
         # MPIR: using OpenMP for parallel recursion in mpn_get_str
+        # OS X's native compiler lacks OpenMP support, use pthread instead
         g++ -O3 -DTEST5 -fopenmp prime_test.cpp -I/usr/local/include
             -L/usr/local/lib -l mpir -o prime5_test -Wno-attributes
 
@@ -21,6 +22,7 @@
             -L/usr/local/lib -l mpir -o prime5_test -Wno-attributes
  
         # GMP: using OpenMP for parallel recursion in mpn_get_str
+        # OS X's native compiler lacks OpenMP support, use pthread instead
         g++ -O3 -DTEST6 -fopenmp prime_test.cpp -I/usr/local/include
             -L/usr/local/lib -l gmp -o prime6_test -Wno-attributes
 
@@ -43,10 +45,6 @@
             prime_test.cpp /Feprime4_test.exe
             /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
 
-        cl /nologo /EHs /O2 /DTEST5
-            /I C:\mpir-2.6.0\lib\Win32\Release
-            prime_test.cpp /Feprime5_test.exe
-            /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
  */
 
 #define PRIME_UNDER_TEST

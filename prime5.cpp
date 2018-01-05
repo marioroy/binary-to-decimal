@@ -4,18 +4,15 @@
     This is free and unencumbered public domain software; see http://unlicense.org/
     I believe this code to be correct, but I may be wrong; use at your own risk.
 
-    Compiled under OS X with g++ 4.2
+    Compiled under Linux / OS X with g++ 4.2 or later
         # using OpenMP for parallel recursion in mpn_get_str
+        # OS X's native compiler lacks OpenMP support, use pthread instead
         g++ -O3 -fopenmp prime5.cpp -I/usr/local/include
             -L/usr/local/lib -lmpir -o prime5 -Wno-attributes
 
         # using pthreads for parallel recursion in mpn_get_str
         g++ -O3 -pthread prime5.cpp -I/usr/local/include
             -L/usr/local/lib -lmpir -o prime5 -Wno-attributes
-
-    Compiled under Windows with VC++ 2010
-        cl /nologo /EHs /O2 /I C:\mpir-2.6.0\lib\Win32\Release prime5.cpp
-            /Feprime5.exe /link C:\mpir-2.6.0\lib\Win32\Release\mpir.lib
 
 */
 
