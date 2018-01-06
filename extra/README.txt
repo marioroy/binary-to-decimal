@@ -5,16 +5,17 @@
 Parallel recursion for mpn_get_str supporting OpenMP and pthreads.
 By Mario Roy, 2018. See https://github.com/marioroy/binary-to-decimal.
 
-Dear GMP/MPIR developer(s),
+Dear GMP/MPIR developers,
 
 A common wish on the web is for mpn_get_str to run faster. Please,
 feel free to disregard my humble attempt. For really "big" numbers,
 it still takes a long time before reaching the initial divide-and-
-conquer inside mpn_dc_get_str. At which point 2 threads run, then 4,
-and not to exceed 8 threads max.
+conquer, inside mpn_dc_get_str. At which point 2 threads run,
+then 4, and not to exceed 8 threads max.
 
-Acknowledgemet
+Acknowledgement
   https://github.com/anthay/binary-to-decimal, by Anthony Hay
+
   prime_test.cpp is useful for validating changes to mpn/get_str.c
   added prime5.cpp (using MPIR) and prime6.cpp (using GMP)
 
@@ -23,15 +24,15 @@ Best,
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Enable parallel by including relevant header files inside C/C++ code.
-// Likewise, add CFLAGS option.
+// Likewise, add appropiate CFLAGS option.
 //
 //   gcc/g++ -fopenmp ...
 //   gcc/g++ -pthread ...
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// GMP ( tested with gmp-5.1.0a minimum - gmp-6.1.2 )
-//     ( also, benefits mpfr using gmp >= 5.1.0a    )
+// GMP ( tested with gmp-5.1.0a minimum through gmp-6.1.2 )
+//     ( also, benefits mpfr using gmp 5.1.0a or later    )
 
 #include <gmp.h>
 
@@ -45,7 +46,7 @@ Best,
 # include "extra/gmp/mpz_get_str.c"
 #endif
 
-// MPIR ( tested with mpir-2.6.0 minimum - mpir-3.0.0 )
+// MPIR ( tested with mpir-2.6.0 minimum through mpir-3.0.0 )
 
 #include <mpir.h>
 
@@ -92,11 +93,11 @@ longlong.h
 
 The unchanged files longlong.h, mpf_get_str.c, and mpz_get_str.c are 
 taken from the baseline tree. They are placed here so that the build
-and runtime picks up mpf/mpz get_str and subsequently mpn get_str
-from here versus the same function from libgmp/libmpir.
+and runtime pick up mpf/mpz get_str and subsequently mpn get_str
+from here versus the same function from lib{gmp,mpir}.
 
-The gmp-impl.h file is shrunked down lots. I left only the relevant
-bits necessary for building successfully.
+The gmp-impl.h file is shrunked down lots. Only the relevant bits
+remain for building successfully.
 
 If desired, updating the baseline tree requires just one file change.
 
@@ -104,8 +105,8 @@ If desired, updating the baseline tree requires just one file change.
   cp extra/mpir/mpn_get_str_thr.c mpir-3.0.0/mpn/get_str.c
 
 It requires adding -pthread to CFLAGS somewhere. The pthread solution
-runs on platforms lacking OpenMP support. It also works with other
-languages not built with OpenMP. E.g. Perl.
+runs on platforms lacking OpenMP support. Moreover, it works with
+other languages not built with OpenMP. E.g. Perl.
 
 // Cheers.
 
