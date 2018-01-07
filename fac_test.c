@@ -1,11 +1,16 @@
 
-// gcc -DUSE_GMP  -O2 -fopenmp fac_test.c -o fac_test -lgmp  -lm
-// gcc -DUSE_GMP  -O2 -pthread fac_test.c -o fac_test -lgmp  -lm
-//
-// gcc -DUSE_MPIR -O2 -fopenmp fac_test.c -o fac_test -lmpir -lm
-// gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm
-//
-// time ./fac_test 7200000 > out
+/*
+ * Output the factorial of n via mpz_out_str to standard output.
+ *
+ * Add -I/usr/local/include -L/usr/local/lib or other path if needed.
+ * gcc -DUSE_GMP  -O2 -fopenmp fac_test.c -o fac_test -lgmp  -lm
+ * gcc -DUSE_GMP  -O2 -pthread fac_test.c -o fac_test -lgmp  -lm
+ *
+ * gcc -DUSE_MPIR -O2 -fopenmp fac_test.c -o fac_test -lmpir -lm
+ * gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm
+ *
+ * time ./fac_test 7200000 > out
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
