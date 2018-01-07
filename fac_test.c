@@ -1,14 +1,18 @@
 
+// gcc -DUSE_GMP  -O2 -fopenmp fac_test.c -o fac_test -lgmp  -lm
+// gcc -DUSE_GMP  -O2 -pthread fac_test.c -o fac_test -lgmp  -lm
+//
+// gcc -DUSE_MPIR -O2 -fopenmp fac_test.c -o fac_test -lmpir -lm
+// gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm
+//
+// time ./fac_test 7200000 > out
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
 #if defined(USE_GMP) || !defined(USE_MPIR)
- // $ gcc -DUSE_GMP -O2 -fopenmp fac_test.c -o fac_test -lgmp -lm
- // $ gcc -DUSE_GMP -O2 -pthread fac_test.c -o fac_test -lgmp -lm
- // $ time ./fac_test 7200000 > out.txt
  #include <gmp.h>
-
  #if defined(_OPENMP)
  # include "extra/gmp/mpn_get_str_omp.c"
  # include "extra/gmp/mpz_out_str.c"
@@ -16,13 +20,8 @@
  # include "extra/gmp/mpn_get_str_thr.c"
  # include "extra/gmp/mpz_out_str.c"
  #endif
-
 #else
- // $ gcc -DUSE_MPIR -O2 -fopenmp fac_test.c -o fac_test -lmpir -lm
- // $ gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm
- // $ time ./fac_test 7200000 > out.txt
  #include <mpir.h>
-
  #if defined(_OPENMP)
  # include "extra/mpir/mpn_get_str_omp.c"
  # include "extra/mpir/mpz_out_str.c"
@@ -30,7 +29,6 @@
  # include "extra/mpir/mpn_get_str_thr.c"
  # include "extra/mpir/mpz_out_str.c"
  #endif
-
 #endif
 
 void fact (int n) {
