@@ -811,6 +811,31 @@ typedef struct powers powers_t;
   } while (0)
 
 
+/* Decimal point string, from the current C locale.  Needs <langinfo.h> for
+   nl_langinfo and constants, preferably with _GNU_SOURCE defined to get
+   DECIMAL_POINT from glibc, and needs <locale.h> for localeconv, each under
+   their respective #if HAVE_FOO_H.
+
+   GLIBC recommends nl_langinfo because getting only one facet can be
+   faster, apparently. */
+
+/* DECIMAL_POINT seems to need _GNU_SOURCE defined to get it from glibc. */
+#if HAVE_NL_LANGINFO && defined (DECIMAL_POINT)
+#define GMP_DECIMAL_POINT  (nl_langinfo (DECIMAL_POINT))
+#endif
+/* RADIXCHAR is deprecated, still in unix98 or some such. */
+#if HAVE_NL_LANGINFO && defined (RADIXCHAR) && ! defined (GMP_DECIMAL_POINT)
+#define GMP_DECIMAL_POINT  (nl_langinfo (RADIXCHAR))
+#endif
+/* localeconv is slower since it returns all locale stuff */
+#if HAVE_LOCALECONV && ! defined (GMP_DECIMAL_POINT)
+#define GMP_DECIMAL_POINT  (localeconv()->decimal_point)
+#endif
+#if ! defined (GMP_DECIMAL_POINT)
+#define GMP_DECIMAL_POINT  (".")
+#endif
+
+
 #if defined (__cplusplus)
 }
 #endif
