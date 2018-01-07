@@ -1,30 +1,13 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Benchmark results on Mac OS X 64-bit using pthreads.
 //
+// Add -I/usr/local/include -L/usr/local/lib or other path if needed.
 // Disable extra/headers with #if 0 in fac_test.c for 1 core results.
-// Set -DNO_OUTPUT to run mpz_fac_ui only, then substract from real time.
-//
-// Add -I/usr/local/include -L/usr/local/lib or other path if necessary.
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// MAPM 5.0 for reference. I needed to edit makefile to run on Mac OS X.
-// Ditto for mapm_rnd.c. There, changed M_get_rnd_seed to the one from
-// MAPM 4.9.5. Also, copied M_get_microsec and M_reverse_string from 4.9.5
-// for M_get_rnd_seed to work, same file. That was it.
-
-$ time ./rpn 7200000 ! ?i0 > out
-
-  MAPM serial : real 32.718s
-
-// MPIR 3.0.0 and GMP 6.1.2
-
-$ gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm -DNO_OUTPUT
 $ gcc -DUSE_MPIR -O2 -pthread fac_test.c -o fac_test -lmpir -lm
-
-$ gcc -DUSE_GMP  -O2 -pthread fac_test.c -o fac_test -lgmp  -lm -DNO_OUTPUT
 $ gcc -DUSE_GMP  -O2 -pthread fac_test.c -o fac_test -lgmp  -lm
-
 $ time ./fac_test 7200000 > out
 
 // Results.
