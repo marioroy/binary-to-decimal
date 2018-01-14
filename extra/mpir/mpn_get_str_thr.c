@@ -34,7 +34,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.  */
 # define __GNUC_VERSION__ (__GNUC__ * 10000 + __GNUC_MINOR__ * 100)
 #endif
 
-#if defined(WIN32) && (defined(__GNUC__) && __GNUC_VERSION__ < 40800)
+#if defined(_WIN32) && (defined(__GNUC__) && __GNUC_VERSION__ < 40800)
   typedef unsigned long int pthread_t;
 #else
 # include <pthread.h>
@@ -327,7 +327,7 @@ mpn_dc_get_str (unsigned char *str, size_t len,
           if (len != 0)
             len = len - powtab->digits_in_base;
 
-         #if defined(WIN32) && !defined(_OPENMP)
+         #if defined(_WIN32) && !defined(_OPENMP)
           if (level > 1 || powtab->digits_in_base < 500000UL)
          #else
           if (level > 3 || powtab->digits_in_base < 500000UL)
@@ -355,7 +355,7 @@ mpn_dc_get_str (unsigned char *str, size_t len,
               thr2_arg.level  = ++level;
               thr2_arg.retlen = 0;
 
-             #if defined(WIN32) && (defined(__GNUC__) && __GNUC_VERSION__ < 40800)
+             #if defined(_WIN32) && (defined(__GNUC__) && __GNUC_VERSION__ < 40800)
               /* On the Windows platform, run serially if compiled using older GCC */
               thr_dc_get_str((void *) &thr2_arg);
 
